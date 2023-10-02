@@ -1,3 +1,6 @@
+mod command;
+
 fn main() {
-    println!("Hello, world!");
+    println!("Hello, seaman!");
+    command::init::init_pipeline();
 }
