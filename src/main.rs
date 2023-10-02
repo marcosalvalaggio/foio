@@ -5,4 +5,6 @@ fn main() {
     command::init::init_pipeline();
     let editor = command::setup::config_decode();
     println!("{}", editor);
+    let script = command::setup::generate_foio_script();
+    println!("{}", script);
 }

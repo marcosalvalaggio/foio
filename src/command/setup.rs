@@ -40,3 +40,40 @@ pub fn config_decode() -> String {
 
     return config.editor;
 }
+
+pub fn generate_foio_script() -> String {
+    let script = r#"#!/bin/bash
+    
+if [ $# -eq 0 ]; then
+    echo "No arguments provided. Usage: $0 <your_argument>"
+    exit 1
+fi
+
+fileType="$1"
+
+cd ~
+cd .foio
+"#;
+    let editor = config_decode();
+    let page_script = format!(
+        r#"
+if [ "$fileType" == "page" ]; then
+    {} page.md
+fi
+"#,
+        editor
+    );
+
+    let calendar_script = format!(
+        r#"
+if [ "$fileType" == "page" ]; then
+    {} calendar.md
+fi
+"#,
+        editor
+    );
+
+    let combined_script = script.to_string() + &page_script + &calendar_script;
+
+    return combined_script;
+}
