@@ -9,7 +9,7 @@ struct Config {
     editor: String,
 }
 
-fn get_home_dir() -> String {
+pub fn get_home_dir() -> String {
     let home_dir = match env::var("HOME") {
         Ok(val) => val,
         Err(_) => {
@@ -28,7 +28,7 @@ fn create_foio_dir() {
     if !foio_path.exists() {
         // If it doesn't exist, create the directory
         if let Err(err) = fs::create_dir(&foio_path) {
-            panic!("Error creating .foio directort: {:?}", err);
+            panic!("Error creating .foio directory: {:?}", err);
         } else {
             println!("Created .foio directory at: {:?}", foio_path);
         }
