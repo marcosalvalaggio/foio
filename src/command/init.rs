@@ -53,7 +53,7 @@ fn create_config_file() {
         let serialized = serde_json::to_string(&config_data).expect("Failed to serialize JSON");
 
         if let Err(err) = fs::write(&config_path, serialized) {
-            eprintln!("Error creating config.json: {:?}", err);
+            panic!("Error creating config.json: {:?}", err);
         } else {
             println!("Created config.json at: {:?}", config_path);
         }
