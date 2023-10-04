@@ -1,3 +1,4 @@
+use chrono::Local;
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::fs;
@@ -21,7 +22,6 @@ pub fn get_home_dir() -> String {
 
 fn create_foio_dir(log: bool) {
     let home_dir = get_home_dir();
-    println!("{}", home_dir);
     let foio_dir = format!("{}/.foio", home_dir);
     let foio_path = Path::new(&foio_dir);
 
@@ -60,14 +60,15 @@ fn create_pages_dir(log: bool) {
     }
 }
 
-fn create_config_file() {
+fn create_config_file(log: bool) {
     let home_dir = get_home_dir();
     let foio_dir = format!("{}/.foio", home_dir);
     let config_path = PathBuf::from(foio_dir).join("config.json");
 
     if config_path.exists() {
-        println!("config.json already exists at: {:?}", config_path);
-        return;
+        if log {
+            println!("config.json already exists at: {:?}", config_path);
+        }
     } else {
         let config_data = Config {
             editor: String::from("vim"),
@@ -78,12 +79,14 @@ fn create_config_file() {
         if let Err(err) = fs::write(&config_path, serialized) {
             panic!("Error creating config.json: {:?}", err);
         } else {
-            println!("Created config.json at: {:?}", config_path);
+            if log {
+                println!("Created config.json at: {:?}", config_path);
+            }
         }
     }
 }
 
-fn create_page_file() {
+fn create_page_file(log: bool) {
     let home_dir = get_home_dir();
     let foio_dir = format!("{}/.foio", home_dir);
     let page_path = PathBuf::from(foio_dir).join("page.md");
@@ -92,24 +95,35 @@ fn create_page_file() {
         if let Err(err) = fs::write(&page_path, "") {
             panic!("Error truncating page.md: {:?}", err);
         } else {
-            println!("Truncated page.md at: {:?}", page_path);
+            if log {
+                println!("Truncated page.md at: {:?}", page_path);
+            }
         }
     } else {
         // create page.md
         match fs::File::create(&page_path) {
             Ok(_) => {
-                println!("created page.md at: {:?}", page_path);
+                if log {
+                    println!("created page.md at: {:?}", page_path);
+                }
             }
             Err(err) => {
                 panic!("Error creating page.md: {:?}", err);
             }
         }
     }
+
+    let current_date = Local::now();
+    let formatted_date = current_date.format("%m-%d-%y").to_string();
+    let date = format!("({})", formatted_date);
+    if let Err(err) = fs::write(&page_path, date) {
+        panic!("Error appending date to page {:?}", err);
+    }
 }
 
 pub fn init_pipeline(log: bool) {
     create_foio_dir(log);
     create_pages_dir(log);
-    create_config_file();
-    create_page_file();
+    create_config_file(log);
+    create_page_file(log);
 }
