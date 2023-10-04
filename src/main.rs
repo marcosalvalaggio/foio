@@ -7,4 +7,5 @@ fn main() {
     println!("{}", editor);
     let script = command::setup::generate_foio_script();
     println!("{}", script);
+    command::setup::write_foio_script();
 }
