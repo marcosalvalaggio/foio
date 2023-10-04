@@ -8,5 +8,5 @@ fn main() {
     let script = command::setup::generate_foio_script();
     println!("{}", script);
     command::setup::write_foio_script();
-    command::setup::compilet_foio_script();
+    command::setup::change_permission_to_foio_script();
 }

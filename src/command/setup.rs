@@ -113,7 +113,7 @@ pub fn write_foio_script() {
     }
 }
 
-pub fn compilet_foio_script() {
+pub fn change_permission_to_foio_script() {
     let home_dir = get_home_dir();
     let foioscript_path = format!("{}/.foio/foioscript.sh", home_dir);
     let status = Command::new("chmod")
