@@ -67,7 +67,7 @@ fi
 
     let calendar_script = format!(
         r#"
-if [ "$fileType" == "page" ]; then
+if [ "$fileType" == "calendar" ]; then
     {} calendar.md
 fi
 "#,
