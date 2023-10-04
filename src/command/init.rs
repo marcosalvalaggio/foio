@@ -19,7 +19,7 @@ pub fn get_home_dir() -> String {
     return home_dir;
 }
 
-fn create_foio_dir() {
+fn create_foio_dir(log: bool) {
     let home_dir = get_home_dir();
     println!("{}", home_dir);
     let foio_dir = format!("{}/.foio", home_dir);
@@ -30,10 +30,33 @@ fn create_foio_dir() {
         if let Err(err) = fs::create_dir(&foio_path) {
             panic!("Error creating .foio directory: {:?}", err);
         } else {
-            println!("Created .foio directory at: {:?}", foio_path);
+            if log {
+                println!("Created .foio directory");
+            }
         }
     } else {
-        println!(".foio directory already exists at: {:?}", foio_path);
+        if log {
+            println!(".foio directory already exists");
+        }
+    }
+}
+
+fn create_pages_dir(log: bool) {
+    let home_dir = get_home_dir();
+    let pages_dir = format!("{}/.foio/pages/", home_dir);
+    let pages_path = Path::new(&pages_dir);
+    if !pages_path.exists() {
+        if let Err(err) = fs::create_dir(&pages_path) {
+            panic!("Error creating pages directory {:?}", err);
+        } else {
+            if log {
+                println!("Created .foio/pages directory");
+            }
+        }
+    } else {
+        if log {
+            println!(".foio/pages directory alreadt exist")
+        }
     }
 }
 
@@ -84,8 +107,9 @@ fn create_page_file() {
     }
 }
 
-pub fn init_pipeline() {
-    create_foio_dir();
+pub fn init_pipeline(log: bool) {
+    create_foio_dir(log);
+    create_pages_dir(log);
     create_config_file();
     create_page_file();
 }

@@ -10,13 +10,13 @@ struct Config {
     editor: String,
 }
 
-pub fn config_decode() -> String {
+pub fn config_decode(log: bool) -> String {
     let home_dir = get_home_dir();
     let foio_dir = format!("{}/.foio", home_dir);
     let foio_path = Path::new(&foio_dir);
 
     if !foio_path.exists() {
-        init_pipeline();
+        init_pipeline(log);
     }
 
     let config_path = foio_path.join("config.json"); // Use Path::join to construct the file path
@@ -42,7 +42,7 @@ pub fn config_decode() -> String {
     return config.editor;
 }
 
-pub fn generate_foio_script() -> String {
+pub fn generate_foio_script(log: bool) -> String {
     let script = r#"#!/bin/bash
     
 if [ $# -eq 0 ]; then
@@ -55,7 +55,7 @@ fileType="$1"
 cd ~
 cd .foio
 "#;
-    let editor = config_decode();
+    let editor = config_decode(log);
     let page_script = format!(
         r#"
 if [ "$fileType" == "page" ]; then
@@ -86,9 +86,9 @@ fi
     return combined_script;
 }
 
-pub fn write_foio_script() {
+pub fn write_foio_script(log: bool) {
     let home_dir = get_home_dir();
-    let foioscript = generate_foio_script();
+    let foioscript = generate_foio_script(log);
     let foio_dir = format!("{}/.foio", home_dir);
     let foioscript_path = PathBuf::from(foio_dir).join("foioscript.sh");
     if foioscript_path.exists() {
