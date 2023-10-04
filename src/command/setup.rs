@@ -3,6 +3,7 @@ use serde::Deserialize;
 use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf}; // Add this line to bring the Read trait into scope
+use std::process::Command;
 
 #[derive(Debug, Deserialize)]
 struct Config {
@@ -109,5 +110,20 @@ pub fn write_foio_script() {
                 panic!("Error creating page.md: {:?}", err);
             }
         }
+    }
+}
+
+pub fn compilet_foio_script() {
+    let home_dir = get_home_dir();
+    let foioscript_path = format!("{}/.foio/foioscript.sh", home_dir);
+    let status = Command::new("chmod")
+        .arg("+x")
+        .arg(foioscript_path)
+        .status()
+        .expect("Failed to execute the chmod command");
+    if status.success() {
+        println!("Permissions changed successfully");
+    } else {
+        println!("Failed to change permissions");
     }
 }
