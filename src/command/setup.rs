@@ -60,21 +60,28 @@ cd .foio
         r#"
 if [ "$fileType" == "page" ]; then
     {} page.md
-fi
 "#,
         editor
     );
 
     let calendar_script = format!(
         r#"
-if [ "$fileType" == "calendar" ]; then
+elif [ "$fileType" == "calendar" ]; then
     {} calendar.md
+"#,
+        editor
+    );
+
+    let date_script = format!(
+        r#"
+else
+    {} "$fileType"
 fi
 "#,
         editor
     );
 
-    let combined_script = script.to_string() + &page_script + &calendar_script;
+    let combined_script = script.to_string() + &page_script + &calendar_script + &date_script;
 
     return combined_script;
 }
