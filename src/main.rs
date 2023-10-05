@@ -8,6 +8,6 @@ fn main() {
     // let script = command::setup::generate_foio_script();
     // println!("{}", script);
     command::setup::write_foio_script(true);
-    command::setup::change_permission_to_foio_script();
+    command::setup::change_permission_to_foio_script(true);
     command::open::execute_foio_script(String::from("page"));
 }

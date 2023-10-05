@@ -95,22 +95,30 @@ pub fn write_foio_script(log: bool) {
         if let Err(err) = fs::write(&foioscript_path, "") {
             panic!("Error truncating page.md: {:?}", err);
         } else {
-            println!("Truncated foioscript.sh at: {:?}", foioscript_path);
+            if log {
+                println!("Truncated foioscript.sh at: {:?}", foioscript_path);
+            }
         }
         if let Err(err) = fs::write(&foioscript_path, foioscript) {
             panic!("Error writing the foioscript.sh {:?}", err);
         } else {
-            println!("Created the foioscript.sh file");
+            if log {
+                println!("Created the foioscript.sh file");
+            }
         }
     } else {
         // create page.md
         match fs::File::create(&foioscript_path) {
             Ok(_) => {
-                println!("created page.md at: {:?}", foioscript_path);
+                if log {
+                    println!("created page.md at: {:?}", foioscript_path);
+                }
                 if let Err(err) = fs::write(&foioscript_path, foioscript) {
                     panic!("Error writing the foioscript.sh {:?}", err);
                 } else {
-                    println!("Created the foioscript.sh file");
+                    if log {
+                        println!("Created the foioscript.sh file");
+                    }
                 }
             }
             Err(err) => {
@@ -120,7 +128,7 @@ pub fn write_foio_script(log: bool) {
     }
 }
 
-pub fn change_permission_to_foio_script() {
+pub fn change_permission_to_foio_script(log: bool) {
     let home_dir = get_home_dir();
     let foioscript_path = format!("{}/.foio/foioscript.sh", home_dir);
     let status = Command::new("chmod")
@@ -129,8 +137,12 @@ pub fn change_permission_to_foio_script() {
         .status()
         .expect("Failed to execute the chmod command");
     if status.success() {
-        println!("Permissions changed successfully");
+        if log {
+            println!("Permissions changed successfully");
+        }
     } else {
-        println!("Failed to change permissions");
+        if log {
+            println!("Failed to change permissions");
+        }
     }
 }
