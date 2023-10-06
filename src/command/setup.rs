@@ -54,35 +54,28 @@ fileType="$1"
 
 cd ~
 cd .foio
+
+if [ "$fileType" == "page" ]; then
+    file="page.md"
+elif [ "$fileType" == "calendar" ]; then
+    file="calendar.md"
+else
+    file="pages/$fileType.md"
+fi
 "#;
     let editor = config_decode(log);
-    let page_script = format!(
+    let file_script = format!(
         r#"
-if [ "$fileType" == "page" ]; then
-    {} page.md
-"#,
-        editor
-    );
-
-    let calendar_script = format!(
-        r#"
-elif [ "$fileType" == "calendar" ]; then
-    {} calendar.md
-"#,
-        editor
-    );
-
-    let date_script = format!(
-        r#"
+if [ -e "$file" ]; then
+    {} "$file"
 else
-    {} pages/"$fileType".md
+    echo "File $file does not exist."
 fi
 "#,
         editor
     );
 
-    let combined_script = script.to_string() + &page_script + &calendar_script + &date_script;
-
+    let combined_script = script.to_string() + &file_script;
     return combined_script;
 }
 
