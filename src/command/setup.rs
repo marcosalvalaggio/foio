@@ -75,7 +75,7 @@ elif [ "$fileType" == "calendar" ]; then
     let date_script = format!(
         r#"
 else
-    {} "$fileType"
+    {} pages/"$fileType".md
 fi
 "#,
         editor
