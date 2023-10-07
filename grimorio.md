@@ -13,3 +13,6 @@
 
 ## Open
 * Execute and pass arguement to foioscript.sh
+
+## Page
+* open page passed to the CLI and after changes saved on pages in .foio dir
