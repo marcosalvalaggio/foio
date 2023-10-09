@@ -55,22 +55,18 @@ fileType="$1"
 cd ~
 cd .foio
 
-if [ "$fileType" == "page" ]; then
+if [ "$fileType" = "page" ]; then
     file="page.md"
-    echo $file
-elif [ "$fileType" == "calendar" ]; then
+elif [ "$fileType" = "calendar" ]; then
     file="calendar.md"
-    echo $file
 else
     file="pages/$fileType.md"
-    echo $file
 fi
 "#;
     let editor = config_decode(log);
     let file_script = format!(
         r#"
 if [ -e "$file" ]; then
-    echo "log: $file"
     {} "$file"
 else
     echo "File $file does not exist."
