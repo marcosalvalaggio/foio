@@ -1,6 +1,5 @@
 mod command;
 
-use clap::{Arg}
 
 fn main() {
     // println!("Hello, seaman!");
