@@ -13,9 +13,8 @@ struct Cli {
 }
 
 fn main() {
-    println!("Hello, seaman!");
-    command::setup::write_foio_script(true);
-    command::setup::change_permission_to_foio_script(true);
+    command::init::init_pipeline(true);
+    command::setup::setup_pipeline(true);
     command::open::execute_foio_script(String::from("page"));
     println!("CLI test");
     let cli = Cli::parse();
