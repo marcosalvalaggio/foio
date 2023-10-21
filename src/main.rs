@@ -22,7 +22,7 @@ fn main() {
     let result = match cli.op.as_str() {
         "+" => cli.first + cli.second,
         "-" => cli.first - cli.second,
-        _ => panic!("lezzo")
+        _ => panic!("unrecognised command")
     };
     println!("{}", result);
 }
