@@ -139,3 +139,10 @@ pub fn change_permission_to_foio_script(log: bool) {
         }
     }
 }
+
+
+pub fn setup_pipeline(log: bool) {
+    write_foio_script(log);
+    change_permission_to_foio_script(log);
+
+}
