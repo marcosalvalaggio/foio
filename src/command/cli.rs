@@ -11,8 +11,11 @@ pub struct FoioArgs {
 
 #[derive(Debug, Subcommand)]
 pub enum EntityType {
+    /// Create the "foio" folder and initialize the files for working with "foio."
     Init(InitCommand),
+    /// Create the config file and the "foio" shell script
     Setup(SetupCommand),
+    /// Command to open a page, calendar, or mm-dd-year file (if present in the "foio" directory).
     Open(OpenCommand)
 }
 
@@ -40,6 +43,7 @@ pub struct LogOptions {
 
 #[derive(Debug, Parser)]
 pub struct OpenCommand {
+    /// page, calendar or mm-dd-year 
     #[clap()]
     pub path: String,
 }
