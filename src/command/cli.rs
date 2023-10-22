@@ -8,6 +8,7 @@ pub struct FoioArgs {
     pub entity_type: EntityType
 }
 
+
 #[derive(Debug, Subcommand)]
 pub enum EntityType {
     Init(InitCommand),
@@ -15,11 +16,27 @@ pub enum EntityType {
     Open(OpenCommand)
 }
 
-#[derive(Debug, Parser)]
-pub struct InitCommand {}
 
 #[derive(Debug, Parser)]
-pub struct SetupCommand {}
+pub struct InitCommand {
+    #[clap(flatten)]
+    pub log_options: Option<LogOptions>,
+}
+
+
+#[derive(Debug, Parser)]
+pub struct SetupCommand {
+    #[clap(flatten)]
+    pub log_options: Option<LogOptions>,
+}
+
+
+#[derive(Debug, Parser)]
+pub struct LogOptions {
+    #[clap(short, long)]
+    pub log: bool,
+}
+
 
 #[derive(Debug, Parser)]
 pub struct OpenCommand {

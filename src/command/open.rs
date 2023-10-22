@@ -11,7 +11,6 @@ pub fn execute_foio_script(arg: String) {
         .status()
         .expect("failed");
     if status.success() {
-        println!("ok");
     } else {
         panic!("Error opening {:?}", arg);
     }
