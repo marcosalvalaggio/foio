@@ -1,8 +1,8 @@
-use clap::{Parser, Subcommand, Args};
+use clap::{Parser, Subcommand};
 
 
 #[derive(Debug, Parser)]
-#[clap(author, version, about)]
+#[clap(version)]
 pub struct FoioArgs {
     #[clap(subcommand)]
     pub entity_type: EntityType
@@ -11,12 +11,18 @@ pub struct FoioArgs {
 #[derive(Debug, Subcommand)]
 pub enum EntityType {
     Init(InitCommand),
+    Setup(SetupCommand),
+    Open(OpenCommand)
 }
 
+#[derive(Debug, Parser)]
+pub struct InitCommand {}
 
-#[derive(Debug, Args)]
-pub struct InitCommand {
-    #[clap(short, long)]
-    pub init: String
+#[derive(Debug, Parser)]
+pub struct SetupCommand {}
+
+#[derive(Debug, Parser)]
+pub struct OpenCommand {
+    #[clap()]
+    pub path: String,
 }
-
