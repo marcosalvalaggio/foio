@@ -35,8 +35,6 @@ fn main() {
             command::open::execute_foio_script(open_cmd.path.clone());
             if &open_cmd.path=="page" {
                 command::update::update_pages();
-            } else {
-                println!("no page open");
             }
         }
     }
