@@ -126,13 +126,8 @@ fn create_calendar_file(log: bool) {
     let foio_dir = format!("{}/.foio", home_dir);
     let page_path = PathBuf::from(foio_dir).join("calendar.md");
     if page_path.exists() {
-        // trucate calendar.md
-        if let Err(err) = fs::write(&page_path, "") {
-            panic!("Error truncating calendar.md: {:?}", err);
-        } else {
-            if log {
-                println!("Truncated calendar.md at: {:?}", page_path);
-            }
+        if log {
+            println!("calendar.md already exist")
         }
     } else {
         // create calendar.md

@@ -36,6 +36,7 @@ fn main() {
             command::open::execute_foio_script(open_cmd.path.clone());
             let current_date = Local::now();
             println!("{}", current_date);
+            command::update::update_pages();
         }
     }
 }
