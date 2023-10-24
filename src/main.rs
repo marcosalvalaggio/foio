@@ -1,6 +1,5 @@
 mod command;
 use clap::Parser;
-use chrono::Local;
 
 use crate::command::cli::EntityType;
 
@@ -34,9 +33,11 @@ fn main() {
         }
         EntityType::Open(open_cmd) => {
             command::open::execute_foio_script(open_cmd.path.clone());
-            let current_date = Local::now();
-            println!("{}", current_date);
-            command::update::update_pages();
+            if &open_cmd.path=="page" {
+                command::update::update_pages();
+            } else {
+                println!("no page open");
+            }
         }
     }
 }
